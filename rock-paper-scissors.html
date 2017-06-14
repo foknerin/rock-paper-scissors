@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>A Game Rock-Paper-Scissors</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="rock-paper-scissors.css" rel="stylesheet" />
+    </head>
+    <body onload="startNewGame()">
+        <div class="container">
+            
+            <div id="pick-items">
+                <img class="header-item-text" src="img/make_a_choice.png" />
+                <div class="item-click">
+                    <img id="img-rock" src="img/rock_drawing.png" onclick="processUserChoice('rock');"/>
+                    <img id="img-paper" src="img/paper_drawing.png" onclick="processUserChoice('paper');"/>
+                    <img id="img-scissors" src="img/scissors_drawing.png" onclick="processUserChoice('scissors');"/>
+                </div>
+                <div class="back_btn" ><a href="http://neringafo.com/"></a> </div>
+            </div>
+
+            <div id="game-result">
+                <div class="your_choice_container">
+                    <img class="item-text" src="img/your_choice.png" />
+                    <img id="user-choice-img" src="img/rock_drawing.png" />
+                </div>
+                <div class="result_container">
+                    <img id="result-img-container" src="img/you_win.png" />
+                    <div class="new_try_btn" onclick="startNewGame();"> </div>
+                </div>
+                <div class="computer_choice_container">
+                    <img class="item-text" src="img/computer_choice.png" />
+                    <img id="computer-choice-img" src="img/paper_drawing.png" />
+                </div>
+            </div>    
+
+        </div>
+    
+        <script language="javascript">
+            const RESULT_TIE = "tie";
+            const RESULT_USER_WINS = "choice1";
+            const RESULT_COMPUTER_WINS = "choice2";
+
+            function processUserChoice(userChoice){
+            
+                var computerChoice = getComputerChoice();
+            
+                var comparationResult = compare(userChoice,computerChoice);
+                processComparationResult(userChoice,computerChoice,comparationResult);
+            };
+            
+            
+            function getComputerChoice() {
+  
+                var choice;
+
+                var randomNumber = Math.random();
+
+                if (randomNumber < 0.34) {
+                    choice = "rock";
+                } else if(randomNumber <= 0.67) {
+                    choice = "paper";
+                } else {
+                    choice = "scissors";
+                }
+              
+              return choice;
+            };
+            
+            
+            function compare(choice1, choice2) {
+                
+                if (choice1 === choice2) {
+                    return RESULT_TIE;
+                  
+                } else if (choice1 === "rock"){
+                     
+                    if (choice2 === "scissors") {
+                      return RESULT_USER_WINS;
+                    } else {
+                      return RESULT_COMPUTER_WINS;
+                    }
+                  
+                    
+                } else if (choice1 === "paper") {
+                      if (choice2 === "rock") {
+                        return RESULT_USER_WINS;
+                    } else {
+                       return RESULT_COMPUTER_WINS;
+                    }
+                
+                  
+                } else if (choice1 === "scissors") {
+                    if (choice2 === "rock") {
+                        return RESULT_COMPUTER_WINS;
+                    } else {
+                        return RESULT_USER_WINS;
+                    }
+                } 
+            };
+            
+            
+            function processComparationResult(userChoice,computerChoice,comparationResultX) {
+            
+                document.getElementById("game-result").style.display = "flex";
+                document.getElementById("pick-items").style.display = "none";
+                
+                if (userChoice === "rock"){
+                    document.getElementById("user-choice-img").src="img/rock_drawing.png";
+                } else if (userChoice === "paper") {
+                    document.getElementById("user-choice-img").src="img/paper_drawing.png";
+                } else {
+                    document.getElementById("user-choice-img").src="img/scissors_drawing.png";
+                };
+                
+                if (computerChoice === "rock"){
+                    document.getElementById("computer-choice-img").src="img/rock_drawing.png";
+                } else if (computerChoice === "paper") {
+                    document.getElementById("computer-choice-img").src="img/paper_drawing.png";
+                } else {
+                    document.getElementById("computer-choice-img").src="img/scissors_drawing.png";
+                };
+                
+                if (comparationResultX === RESULT_TIE ) {
+                    document.getElementById("result-img-container").src="img/tie.png";
+                } else if (comparationResultX === RESULT_USER_WINS) {
+                    document.getElementById("result-img-container").src="img/you_win.png";
+                } else {
+                    document.getElementById("result-img-container").src="img/computer_wins.png";
+                }
+                
+            };
+            
+            
+            function startNewGame() {
+                document.getElementById("game-result").style.display = "none";
+                document.getElementById("pick-items").style.display = "inline";
+            };
+            
+        </script>
+        
+    </body>
+</html>
